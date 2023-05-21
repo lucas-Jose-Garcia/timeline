@@ -21,7 +21,7 @@ export async function memoriesRoutes(app: FastifyInstance) {
     return memories.map((memory) => {
       return {
         id: memory.id,
-        coverUrl: memory.converUrl,
+        coverUrl: memory.coverUrl,
         excerpt: memory.content.substring(0, 115).concat("..."),
       };
     });
@@ -77,11 +77,11 @@ export async function memoriesRoutes(app: FastifyInstance) {
 
     const bodySchema = z.object({
       content: z.string(),
-      converUrl: z.string(),
+      coverUrl: z.string(),
       isPublic: z.coerce.boolean().default(false),
     });
 
-    const { content, converUrl, isPublic } = bodySchema.parse(request.body);
+    const { content, coverUrl, isPublic } = bodySchema.parse(request.body);
 
     let memory = await prisma.memory.findUniqueOrThrow({
       where: {
@@ -99,7 +99,7 @@ export async function memoriesRoutes(app: FastifyInstance) {
       },
       data: {
         content,
-        converUrl,
+        coverUrl,
         isPublic,
       },
     });
